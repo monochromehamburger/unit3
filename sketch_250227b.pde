@@ -9,15 +9,19 @@ color green6= #70e000;
 color green7= #9ef01a;
 color green8= #ccff33;
 color selectedColor=green1;
+float sliderY=200;
+float thickness=1;
 void setup(){
-  size(1000, 1000);
+  size(1020, 999);
   background(255);
 }
 void draw(){
+  
   textSize(64);
   noStroke();
   fill(200);
-  rect(0, 0, 1000, 150);
+  rect(0, 0, 1020, 150);
+  rect(0, 150, 50, 400);
   fill(0);
   text("M A C R O S O F T P A I N T", 300, 75);
   //color choices
@@ -56,16 +60,29 @@ void draw(){
   
   tactile(412, 794, 200);
   fill(0);
-  square(412, 794, 203);
+  square(412, 794, 200);
   fill(255);
   text("New", 452, 900);
   
-  tactile(615, 794, 200);
+  tactile(618, 794, 200);
   fill(0);
-  square(615, 794, 203);
+  square(618, 794, 200);
   fill(255);
   text("Save", 645, 900);
   
+  tactile(821, 794, 200);
+  fill(0);
+  square(821, 794, 200);
+  fill(255);
+  text("Load", 845, 900);
+  fill(0);
+  strokeWeight(5);
+ 
+  line(25, 200, 25, 400);
+  circle(25, sliderY, 40);
+  strokeWeight(thickness);
+  stroke
+  line(25, 450, 25, 500);
   stroke(selectedColor);
   fill(selectedColor);
   circle(100, 75, 100);
@@ -106,18 +123,40 @@ void mouseReleased(){
   if(mouseX>412 && mouseX<612 && mouseY>794 && mouseY<1000){
     background(255);
   }
-  if(mouseX>615 && mouseX<815 && mouseY>794 && mouseY<1000){
+  if(mouseX>618 && mouseX<818 && mouseY>794 && mouseY<1000){
     selectOutput("test", "saveImage");
   }
+  if(mouseX>821 && mouseX<1021 && mouseY>794 && mouseY<1000){
+    selectInput("test", "loadImage");
+  }
+  controlSlider();
 }
 void mouseDragged(){
   if(mouseY>150 && mouseY<794){
+    strokeWeight(thickness);
     line(pmouseX, pmouseY, mouseX, mouseY);
+  }
+  controlSlider();
+}
+void controlSlider(){
+  if(mouseY > 200 && mouseY < 400 && mouseX>0 && mouseX<50){
+    sliderY=mouseY;
+    thickness=map(sliderY, 200, 400, 0, 50);
   }
 }
 void saveImage(File f){
   if(f!=null){
     PImage canvas = get(0, 150, width, 640);
     canvas.save(f.getAbsolutePath());
+  }
+}
+void loadImage(File f){
+  if(f!=null){
+    int n=0;
+    while(n<100){
+      PImage pic = loadImage(f.getPath());
+      image(pic, 0, 150);
+      n=n+1;
+    }
   }
 }
