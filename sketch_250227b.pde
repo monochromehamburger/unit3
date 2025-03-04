@@ -11,9 +11,12 @@ color green8= #ccff33;
 color selectedColor=green1;
 float sliderY=200;
 float thickness=1;
+PImage clueless;
+boolean cluelessOn;
 void setup(){
   size(1020, 999);
   background(255);
+  clueless=loadImage("clueless.png");
 }
 void draw(){
   
@@ -21,7 +24,7 @@ void draw(){
   noStroke();
   fill(200);
   rect(0, 0, 1020, 150);
-  rect(0, 150, 50, 400);
+  rect(0, 150, 50, 275);
   fill(0);
   text("M A C R O S O F T P A I N T", 300, 75);
   //color choices
@@ -58,6 +61,7 @@ void draw(){
   fill(green8);
   square(309, 900, 100);
   
+  // optiong
   tactile(412, 794, 200);
   fill(0);
   square(412, 794, 200);
@@ -75,17 +79,25 @@ void draw(){
   square(821, 794, 200);
   fill(255);
   text("Load", 845, 900);
+  
+  //stamp
+  cluelessTactile(0, 688, 100);
+  square(0, 688, 100);
+  image(clueless, 0, 688, 100, 100);
+ 
   fill(0);
   strokeWeight(5);
- 
+  
   line(25, 200, 25, 400);
   circle(25, sliderY, 40);
-  strokeWeight(thickness);
-  stroke
-  line(25, 450, 25, 500);
   stroke(selectedColor);
   fill(selectedColor);
-  circle(100, 75, 100);
+  if(cluelessOn==true){
+    image(clueless, 50, 25, 100, 100);
+  }
+  else{
+    circle(100, 75, thickness);
+  }
 }
 void tactile(int x, int y, int r){
   if(mouseX>x && mouseX<x+r && mouseY>y && mouseY<y+r){
@@ -95,30 +107,47 @@ void tactile(int x, int y, int r){
     stroke(100, 100, 100);
   }
 }
+void cluelessTactile(int x, int y, int r){
+  if(mouseX>x && mouseX<x+r && mouseY>y && mouseY<y+r){
+    stroke(255,0,0);
+  }
+  else{
+    stroke(100, 100, 100);
+  }
+}
 void mouseReleased(){
+  //buttons
   if(mouseX>0 && mouseX<100 && mouseY>794 && mouseY<894 ){
     selectedColor=green1;
+    cluelessOn=false;
   }
   if(mouseX>0 && mouseX<100 && mouseY>900 && mouseY<1000){
     selectedColor=green2;
+    cluelessOn=false;
   }
   if(mouseX>103 && mouseX<203 && mouseY>794 && mouseY<894){
     selectedColor=green3;
+    cluelessOn=false;
   }
   if(mouseX>103 && mouseX<203 && mouseY>900 && mouseY<1000){
     selectedColor=green4;
+    cluelessOn=false;
   }
   if(mouseX>206 && mouseX<306 && mouseY>794 && mouseY<894){
     selectedColor=green5;
+    cluelessOn=false;
   }
   if(mouseX>206 && mouseX<306 && mouseY>900 && mouseY<1000){
     selectedColor=green6;
+    cluelessOn=false;
   }
   if(mouseX>309 && mouseX<409 && mouseY>794 && mouseY<894){
     selectedColor=green7;
+    cluelessOn=false;
   }
   if(mouseX>309 && mouseX<409 && mouseY>900 && mouseY<1000){
     selectedColor=green8;
+    cluelessOn=false;
   }
   if(mouseX>412 && mouseX<612 && mouseY>794 && mouseY<1000){
     background(255);
@@ -129,19 +158,37 @@ void mouseReleased(){
   if(mouseX>821 && mouseX<1021 && mouseY>794 && mouseY<1000){
     selectInput("test", "loadImage");
   }
+  
+  //clueless
+  if(mouseX>0 && mouseX<100 && mouseY>688 && mouseY<788){
+    cluelessOn=true;
+  }
+  
   controlSlider();
 }
+void mouseClicked(){
+  //for clueless emoji
+  if(mouseY>150 && mouseY<794 && !(mouseY > 150 && mouseY < 425 && mouseX>0 && mouseX<50) && !(mouseX>0 && mouseX<100 && mouseY>688 && mouseY<788) && cluelessOn==true){
+    image(clueless, mouseX, mouseY, 100, 100);
+  }
+}
 void mouseDragged(){
-  if(mouseY>150 && mouseY<794){
-    strokeWeight(thickness);
-    line(pmouseX, pmouseY, mouseX, mouseY);
+  //drawing
+  if(mouseY>150 && mouseY<794 && !(mouseY > 150 && mouseY < 425 && mouseX>0 && mouseX<50) && !(mouseX>0 && mouseX<100 && mouseY>688 && mouseY<788)){
+    if(cluelessOn==false){
+      strokeWeight(thickness);
+      line(pmouseX, pmouseY, mouseX, mouseY);
+    }
+    else{
+      image(clueless, mouseX, mouseY, 100, 100);
+    }
   }
   controlSlider();
 }
 void controlSlider(){
   if(mouseY > 200 && mouseY < 400 && mouseX>0 && mouseX<50){
     sliderY=mouseY;
-    thickness=map(sliderY, 200, 400, 0, 50);
+    thickness=map(sliderY, 200, 400, 0, 150);
   }
 }
 void saveImage(File f){
