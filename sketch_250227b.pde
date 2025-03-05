@@ -11,7 +11,7 @@ color green8= #ccff33;
 color white= #ffffff;
 color selectedColor=green1;
 float sliderY=200;
-float thickness=1;
+float thickness=5;
 PImage clueless;
 boolean cluelessOn;
 void setup() {
@@ -182,8 +182,13 @@ void mouseReleased() {
 }
 void mouseClicked() {
   //for clueless emoji
-  if (mouseY>150 && mouseY<794 && mouseX>103 && cluelessOn==true) {
-    image(clueless, mouseX-50, mouseY-50, 100, 100);
+  if (mouseY>150 && mouseY<794 && mouseX>103) {
+    if (cluelessOn==false) {
+      strokeWeight(thickness);
+      line(pmouseX, pmouseY, mouseX, mouseY);
+    } else {
+      image(clueless, mouseX-thickness/2, mouseY-thickness/2, thickness, thickness);
+    }
   }
 }
 void mouseDragged() {
