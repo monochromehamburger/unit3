@@ -11,7 +11,7 @@ color green8= #ccff33;
 color white= #ffffff;
 color selectedColor=green1;
 float sliderY=200;
-float thickness=5;
+float thickness=3;
 PImage clueless;
 boolean cluelessOn;
 void setup() {
@@ -27,7 +27,7 @@ void draw() {
   rect(0, 0, 1020, 150);
   rect(0, 150, 103, 1000);
   fill(0);
-  text("M A C R O S O F T P A I N T", 300, 75);
+  text("M A C R O S O F T P A I N T (tm)", 225, 75);
   //color choices
   strokeWeight(6);
   tactile(0, 794, 100);
@@ -181,7 +181,7 @@ void mouseReleased() {
   controlSlider();
 }
 void mouseClicked() {
-  //for clueless emoji
+  //for clueless emoji :clueless:
   if (mouseY>150 && mouseY<794 && mouseX>103) {
     if (cluelessOn==false) {
       strokeWeight(thickness);
@@ -196,7 +196,7 @@ void mouseDragged() {
   if (mouseY>150 && mouseY<794 && mouseX>103) {
     if (cluelessOn==false) {
       strokeWeight(thickness);
-      line(pmouseX, pmouseY, mouseX, mouseY);
+      line(pmouseX, pmouseY, mouseX, mouseY); 
     } else {
       image(clueless, mouseX-thickness/2, mouseY-thickness/2, thickness, thickness);
     }
@@ -206,7 +206,7 @@ void mouseDragged() {
 void controlSlider() {
   if (mouseY > 200 && mouseY < 400 && mouseX>0 && mouseX<100) {
     sliderY=mouseY;
-    thickness=map(sliderY, 200, 400, 5, 150);
+    thickness=map(sliderY, 200, 400, 3, 150);
   }
 }
 void saveImage(File f) {
